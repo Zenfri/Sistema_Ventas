@@ -1,0 +1,49 @@
+.fondo{
+    background-image: url('../img/fondo.webp') !important ;
+    background-position: center, center;
+}
+
+
+.card{
+    background-color: #9fe8c7;
+}
+
+@font-face{
+    font-family: 'challenger';
+    src: url("../fuentes/challenger.ttf");
+}
+
+.encabezado{
+    color: #248056;
+    font-family: challenger;
+    font-size: 2rem ;
+}
+
+.mi-tabla{
+    background-color: #15FAF0;
+}
+
+
+.mi-tabla tbody tr:nth-child(even) {
+    background-color: #15FACD; /* nth-child(even): todos los hijos enésimos pares */
+}
+
+.mi-tabla tbody tr:nth-child(odd) {
+    background-color: #ffffff !important; 
+}
+
+.botonAgregar{
+    background-color: #0F62CC;
+    color: white;
+}
+
+.botonActualizar{
+    background-color: #24948A;
+    color: white;
+}
+
+.botonActualizar:hover{
+    background-color: #CAE5E2;
+    color: black;
+    font-weight: bold;
+}

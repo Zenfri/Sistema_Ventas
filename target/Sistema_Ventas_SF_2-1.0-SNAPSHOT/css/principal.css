@@ -1,0 +1,40 @@
+.barra{
+    margin-left: 1rem ;
+    border: none; 
+    background-color: salmon;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.mi_frame{
+    height: 720px;
+}
+
+.fondo{
+    background-image: url('../img/fondo.webp') !important ;
+    background-position: center center;
+    
+}
+
+
+h1{
+    font-size: 3rem;
+    color: #FADBD8;
+}
+
+
+h2{
+    font-size: 5rem;
+    color: #3498DB;
+}
+
+
+
+
+
+
+
+
+
+
+

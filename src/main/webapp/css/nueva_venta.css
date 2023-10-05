@@ -1,0 +1,50 @@
+@media print{
+    .no-imprimir, .btn{ /*llamamos a las clases de los elementos que no se imprimirán*/
+        display: none; /*Eliminando todo el contenido*/
+    }   
+    
+}
+
+.btn-buscar{
+    background-color: mediumslateblue;
+}
+.btn-buscar:hover{
+    background-color: #DBC4EB;
+    color: black;
+    border: 1px;
+}
+.card-registrar{
+    background-color: #DEF4F5;
+}
+
+.btn-agregar{
+    background-color: black;
+}
+.btn-agregar:hover{
+    background-color: #919D9E;
+    color: white;
+}
+
+.tb-cabecera{
+    background-color: #FAFA55;
+}
+
+.btn-generar{
+    background-color: #2741E6;
+    color: white;
+    padding: 0.7rem;  
+}
+.btn-generar:hover{
+    background-color: #27A3E6;
+    color: white;
+}
+
+.btn-cancelar{
+    background-color: red;
+    color: white;
+    padding: 0.7rem;
+}
+.btn-cancelar:hover{
+    background-color: #F07746;
+    color: white;
+}
