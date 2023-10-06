@@ -1,3 +1,9 @@
+.fondo{
+    background-image: url('../img/fondo.webp') ;
+    background-position: center, center;
+}
+
+
 @media print{
     .no-imprimir, .btn{ /*llamamos a las clases de los elementos que no se imprimirán*/
         display: none; /*Eliminando todo el contenido*/

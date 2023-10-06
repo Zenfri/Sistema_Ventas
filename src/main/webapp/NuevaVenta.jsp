@@ -8,9 +8,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link href="css/nueva_venta.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
-        <div class="container-fluid mt-3">
-            <div class="row d-flex">
+    <body class="fondo">
+        <div class="container-fluid mt-3 ">
+            <div class="row d-flex ">
                 <div class="col-12 col-sm-6 col-md-5 no-imprimir">
                     <div class="card">
                         <div class="card-body card-registrar">

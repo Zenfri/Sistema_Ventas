@@ -48,7 +48,7 @@ public class VentaDAO {
             ps.setInt(2, oVenta.getId_cliente());
             ps.setString(3, oVenta.getNum_serie());
             //curdate() -> en sql devuelve la FECHA pactual
-            ps.setDouble(4, oVenta.getMonto());
+            ps.setBigDecimal(4, oVenta.getMonto());
             ps.setByte(5, oVenta.getEstado());
             ps.executeUpdate();
             logger.info("Se logró ejecutar la consulta SQL exitósamente para insertar nueva Venta");
@@ -68,7 +68,7 @@ public class VentaDAO {
             ps.setInt(1, oVenta.getId_producto());
             ps.setInt(2, oVenta.getId_venta());
             ps.setInt(3, oVenta.getCantidad());
-            ps.setDouble(4, oVenta.getPrecio());
+            ps.setBigDecimal(4, oVenta.getPrecio());
             ps.executeUpdate();
             logger.info("Se logró ejecutar la consulta SQL exitósamente para insertar DetalleVenta");
         } catch (Exception e) {

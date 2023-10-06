@@ -1,23 +1,25 @@
 package modelo;
 
+import java.math.BigDecimal;
+
 public class Producto { 
     private int id_producto;
     private String nombre;
-    private double precio;
+    private BigDecimal precio;
     private int stock;
     private byte estado;
 
     public Producto() {
     }
     
-    public Producto(String nombre, double precio, int stock, byte estado) {
+    public Producto(String nombre, BigDecimal precio, int stock, byte estado) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
         this.estado = estado;
     }
 
-    public Producto(int id_producto, String nombre, double precio, int stock, byte estado) {
+    public Producto(int id_producto, String nombre, BigDecimal precio, int stock, byte estado) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.precio = precio;
@@ -41,11 +43,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 

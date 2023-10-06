@@ -8,6 +8,9 @@ package controlador;
 import config.Serie;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +31,7 @@ public class Controlador extends HttpServlet {
     //atributos para agregar a la tabla NuevaVenta.jsp
     private ArrayList<Venta> lVentas = new ArrayList<>();
     private int item = 0;
-    private double monto = 0;
+    private BigDecimal monto = BigDecimal.ZERO;
 
     //Para generar la serie
     private VentaDAO oVentaDAO = new VentaDAO();
@@ -61,8 +64,11 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Producto.jsp").forward(request, response);
                     break;
                 } else if (opcion.equals("Agregar")) {
+                    String precio = request.getParameter("txtPrecio");
+                    BigDecimal precioBD = new BigDecimal(precio);
+
                     objProducto = new Producto(request.getParameter("txtNombre"),
-                            Double.parseDouble(request.getParameter("txtPrecio")),
+                            precioBD,
                             Integer.parseInt(request.getParameter("txtStock")),
                             Byte.parseByte(request.getParameter("txtEstado")));
                     objProductoDAO.insertar(objProducto);
@@ -78,11 +84,15 @@ public class Controlador extends HttpServlet {
                         break;
                     }
                 } else if (opcion.equals("Actualizar")) {
-                    if (!request.getParameter("txtId").equals("")) {
+                    if (!request.getParameter("txtId").isEmpty()) {
+
+                        String precio = request.getParameter("txtPrecio");
+                        BigDecimal precioBD = new BigDecimal(precio);
+
                         Producto nuevoProducto = new Producto(
                                 Integer.parseInt(request.getParameter("txtId")),
                                 request.getParameter("txtNombre"),
-                                Double.parseDouble(request.getParameter("txtPrecio")),
+                                precioBD,
                                 Integer.parseInt(request.getParameter("txtStock")),
                                 Byte.parseByte(request.getParameter("txtEstado")));
                         objProductoDAO.actualizar(nuevoProducto);
@@ -223,7 +233,7 @@ public class Controlador extends HttpServlet {
                         }
                     }
                 } else if (opcion.equals("buscarProducto")) {
-                    if (!request.getParameter("txtIdProducto").equals("")) {
+                    if (!request.getParameter("txtIdProducto").isEmpty()) {
                         int id = Integer.parseInt(request.getParameter("txtIdProducto"));
                         objProducto = new Producto();
                         objProducto = objProductoDAO.buscar(id);
@@ -237,15 +247,19 @@ public class Controlador extends HttpServlet {
                                 }
                             }
                             request.setAttribute("oProducto", objProducto);
-                            request.setAttribute("monto", monto);
                         }
                     }
+                    //enviar monto
+                    monto = monto.setScale(2, RoundingMode.HALF_UP);
+                    request.setAttribute("monto", monto);
+                    //enviar cliente seleccionado
+                    request.setAttribute("oCliente", objCliente);
                     //enviar lista de ventas
                     request.setAttribute("lVentas", lVentas);
 
                 } else if (opcion.equals("agregar")) {
                     //validar ingreso de número
-                    if (!request.getParameter("txtIdProducto").isEmpty() &&  objCliente!=null) {
+                    if (!request.getParameter("txtIdProducto").isEmpty() && objCliente != null) {
                         //buscar id del producto
                         int idProducto = Integer.parseInt(request.getParameter("txtIdProducto"));
                         objProducto = objProductoDAO.buscar(idProducto);
@@ -254,11 +268,12 @@ public class Controlador extends HttpServlet {
                         if (objProducto != null) {
                             //agregar a la lista los parámetros del cliente y del producto
                             int cantidad = 0;
-                            double precio = 0, sub_total = 0;
+                            BigDecimal precio = BigDecimal.ZERO;
+                            BigDecimal sub_total = BigDecimal.ZERO;
                             String nombre = objProducto.getNombre();
                             precio = objProducto.getPrecio();
                             cantidad = Integer.parseInt(request.getParameter("txtCantidad"));
-                            sub_total = precio * cantidad;
+                            sub_total = precio.multiply(new BigDecimal(cantidad));
 
                             //buscar idproducto para que no se agregue si se repite
                             boolean bandera = true;
@@ -273,18 +288,18 @@ public class Controlador extends HttpServlet {
                                 lVentas.add(new Venta(item, idProducto, nombre,
                                         precio, cantidad, sub_total));
                             }
-
-                            //acumulando el monto
-                            monto = 0;
-                            for (Venta lVenta : lVentas) {
-                                monto += lVenta.getSubtotal();
-                            }
                         }
-                        request.setAttribute("monto", monto); //enviar monto
                     }
+                    //acumulando el monto
+                    monto = BigDecimal.ZERO;
+                    for (Venta lVenta : lVentas) {
+                        monto = monto.add(lVenta.getSubtotal());
+                    }
+                    monto = monto.setScale(2, RoundingMode.HALF_UP); //aprox a 2 decimales al número más cercano
+                    request.setAttribute("monto", monto); //enviar monto
 
                     //mantener datos del cliente
-                    if (!request.getParameter("txtDniCliente").equals("")) {
+                    if (!request.getParameter("txtDniCliente").isEmpty()) {
                         String dni = request.getParameter("txtDniCliente");
                         objCliente = new Cliente();
                         objCliente = objClienteDAO.buscarPorDni(dni);
@@ -336,7 +351,8 @@ public class Controlador extends HttpServlet {
                         }
 
                         //limpiando datos
-                        lVentas = new ArrayList<>();
+                        monto = BigDecimal.ZERO;
+                        lVentas.clear();
                         objCliente = null; //para generar luego otra venta requiere que se busque nuevamente un cliente
                     }
 
@@ -356,23 +372,26 @@ public class Controlador extends HttpServlet {
                         i++; //este while actúa como un for, pero cuando encuentra el producto se sale de la condición while
                     }
                     //calculando nuevamente el monto
-                    monto = 0;
+                    monto = BigDecimal.ZERO;
                     for (Venta lVenta : lVentas) {
-                        monto += lVenta.getSubtotal();
+                        monto = monto.add(lVenta.getSubtotal());
                     }
+                    monto = monto.setScale(2, RoundingMode.HALF_UP);
                     request.setAttribute("monto", monto);
 
                     //enviando nueva lista
                     request.setAttribute("lVentas", lVentas); //enviar nueva lista actualizada
-                } 
-                else if (opcion.equals("CancelarVenta")) {
+                } else if (opcion.equals("CancelarVenta")) {
                     objCliente = null;
                     lVentas = new ArrayList<Venta>();
                     item = 0;
-                    monto = 0;
+                    monto = BigDecimal.ZERO;
                 }
 
                 //TODO ESTO SIEMPRE SE EJECUTARÁ en el caso NuevaVenta.jsp
+                request.setAttribute("lVentas", lVentas);
+                
+                
                 //reiniciando parámetros
                 if (lVentas.isEmpty()) {
                     item = 0;//si la lista está vacía, que reinicie el num de orden
@@ -387,7 +406,7 @@ public class Controlador extends HttpServlet {
                     serie_final = "N000000001";
                 }
                 request.setAttribute("serie", serie_final);
-
+                
                 //redirigir solicitud a la página
                 request.getRequestDispatcher("NuevaVenta.jsp?menu=NuevaVenta&opcion=Listar").forward(request, response);
                 break;

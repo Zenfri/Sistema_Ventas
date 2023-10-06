@@ -1,5 +1,6 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Venta {
@@ -12,10 +13,10 @@ public class Venta {
     private int num_item; //número de la fila de la tabla o de cada nuevo registro de producto en NuevaVenta, o num de orden
     private Date fecha;
     private String descripcion; //nombre del producto
-    private double precio;
+    private BigDecimal precio;
     private int cantidad;
-    private double subtotal;
-    private double monto;
+    private BigDecimal subtotal;
+    private BigDecimal monto;
     private byte estado;
 
     public Venta() {
@@ -26,7 +27,7 @@ public class Venta {
     }
 
     //para la tabla
-    public Venta( int num_item, int id_producto,  String descripcion, double precio, int cantidad, double subtotal) {
+    public Venta( int num_item, int id_producto,  String descripcion, BigDecimal precio, int cantidad, BigDecimal subtotal) {
         this.id_producto = id_producto;
         this.num_item = num_item;
         this.descripcion = descripcion;
@@ -37,7 +38,7 @@ public class Venta {
 
     
     
-    public Venta(int id_venta, int id_empleado, int id_cliente, int id_producto, String num_serie, int num_item, Date fecha, String descripcion, double precio, int cantidad, double subtotal, double monto, byte estado) {
+    public Venta(int id_venta, int id_empleado, int id_cliente, int id_producto, String num_serie, int num_item, Date fecha, String descripcion, BigDecimal precio, int cantidad, BigDecimal subtotal, BigDecimal monto, byte estado) {
         this.id_venta = id_venta;
         this.id_empleado = id_empleado;
         this.id_cliente = id_cliente;
@@ -117,11 +118,11 @@ public class Venta {
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
@@ -133,19 +134,19 @@ public class Venta {
         this.cantidad = cantidad;
     }
 
-    public double getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(double subtotal) {
+    public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
 
-    public double getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
-    public void setMonto(double monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -156,6 +157,7 @@ public class Venta {
     public void setEstado(byte estado) {
         this.estado = estado;
     }
+
     
     
 }

@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse " id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="barra btn btn-outline-light" aria-current="page" href="Controlador?menu=Principal">Home</a>
+                            <a class="barra btn btn-outline-light" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="barra btn btn-outline-light" href="Controlador?menu=Producto&opcion=Listar" target="miFrame">Productos</a>
@@ -34,7 +34,7 @@
                     </ul>
 
                 </div>
-                <div class="dropdown" style="margin-right: 2rem">
+                <div class="dropdown" style="margin-right: 2rem !important">
                     <button class="btn btn-outline-dark bg-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         ${empleado.getNombre()}
                     </button>
